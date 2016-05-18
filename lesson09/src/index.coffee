@@ -36,7 +36,7 @@ server.register([require('inert'), require('vision'), require('lout')], (err) ->
 		method: 'POST'
 		handler: (request, reply) ->
 
-			post = new Post({ 
+			post = new Post({
 				title: request.payload.title
 				body: request.payload.body
 				author: request.payload.author
