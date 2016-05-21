@@ -49,10 +49,11 @@ server.register(require("hapi-auth-cookie"), (error) ->
 		path: '/'
 		method: 'GET'
 		config:
-			auth: false
+			auth: { mode: 'try' }
+			plugins: {'hapi-auth-cookie' : { redirectTo: false } }
 			handler: (request, reply) ->
 				if request.auth.isAuthenticated
-					view(reply, 'authenticated')
+					view(reply, 'authenticated', 'You are authenticated')
 				else
 					view(reply)
 	}
