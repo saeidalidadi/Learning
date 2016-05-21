@@ -41,4 +41,29 @@ This is responsible for `D` and will delete an specific post with `post_randomID
 ### PUT /posts/{post_key}
 This is responsible for `U` and will update an specefic post with `post_randomID` from couchbase
 
+# Lesson 10 - Cookie Based Authentication
+In this lesson you learn cookie based authentication using [hapi-auth-cookie](https://www.npmjs.com/package/hapi-auth-cookie) plugin.
+
+## Start the API
+In lesson10 directory use `gulp` or `gulp start` to run this API.
+
+## How it works
+In your browser address bar write `localhost:8015' and hit Enter.
+
+### Login
+After showing the login page use `admin` for username and password.
+this page contains a form with `post` method and `/login' action.
+
+### Logout
+After successful login you will face with wellcome message and logout button.
+this page contains a form with `post` method and `/logout` action.
+
+### Ping to API
+If you enter `/ping` after main address while you are loged in
+the API will reply `pong` and in case of logout will say `I will say pong if login`.
+
+### Hello with name
+You will have access to `/hello/arash` just if have been authenticated as `admin`.
+
+
 
