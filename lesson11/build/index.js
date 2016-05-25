@@ -36,8 +36,9 @@ server.register(require('hapi-auth-jwt2'), function(err) {
     }
   };
   server.auth.strategy('jwt', 'jwt', true, {
-    key: tokenKey,
+    key: config.tokenKey,
     verifyOptions: {
+      ignoreExpiration: false,
       algorithms: ['HS256']
     },
     validateFunc: validate
@@ -68,7 +69,7 @@ server.register(require('hapi-auth-jwt2'), function(err) {
         } else if (users[payload.email]) {
           return reply('This email has been registered before');
         } else {
-          users[payload.email].state = 'out';
+          users[payload.email] = payload;
           return reply("Your registeration was successful login to your account");
         }
       }
@@ -95,7 +96,9 @@ server.register(require('hapi-auth-jwt2'), function(err) {
           cr = {
             email: users[request.payload.email].email
           };
-          return reply('authorized').header('Autherization', jwtoken.sign(cr, tokenKey, {}));
+          return reply('authorized').header('Autherization', jwtoken.sign(cr, config.tokenKey, {
+            expiresIn: "30s"
+          }));
         }
       }
     }, {
