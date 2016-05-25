@@ -74,7 +74,7 @@ server.register(require('hapi-auth-jwt2'), (err) ->
 				reply('You are not registered')
 			else
 				cr = { email: users[request.payload.email].email }
-				reply('authorized').header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "30s" }))
+				reply('authorized').header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "50s" }))
 	}
 	,
 	{
