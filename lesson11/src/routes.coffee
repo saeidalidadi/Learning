@@ -1,6 +1,7 @@
-config = require "./config"
-users = require "./users"
-jwtoken = require "jsonwebtoken"
+config   = require "./config"
+users    = require "./users"
+jwtoken  = require "jsonwebtoken"
+messages = require "./messages"
 
 module.exports = [{
 	path: '/'
@@ -15,18 +16,22 @@ module.exports = [{
 	config:
 		auth: { mode: 'try' }
 	handler: (request, reply) ->
+
 		if !request.payload
-			return reply('No information')
+			return reply(messages.signup.isn_payload)
+
 		payload = request.payload
 		if !payload.email or !payload.password or !payload.fullname or
 			 !payload.dob or !payload.weight or !payload.height
-			reply('all field must be filled')
+			reply(messages.signup.isn_payload)
+
 		else if users[payload.email]
-			reply('This email has been registered before')
+			reply(messages.signup.before_registered)
+
 		else
 			users[payload.email] = payload
 			#users[payload.email].state = 'out'
-			return reply("Your registeration was successful login to your account")
+			return reply(messages.signup.success)
 }
 ,
 {
@@ -36,16 +41,20 @@ module.exports = [{
 		auth: { mode: 'try' }
 	handler: (request, reply) ->
 		if !request.payload
-			return reply('not a payload')
+			return reply(messages.login.invalid)
+
 		if request.auth.isAuthenticated
-			reply('you are loged in as a valid user')
+			reply(messages.login.loggedin)
+
 		else if !request.payload.email or !request.payload.password
-			reply('password or email is not valid')
+			reply(messages.login.invalid)
+
 		else if !users[request.payload.email]
-			reply('You are not registered')
+			reply(messages.login.unregistered)
+
 		else
 			cr = { email: users[request.payload.email].email }
-			reply('authorized').header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "50s" }))
+			reply(messages.login.success).header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "50s" }))
 }
 ,
 {
