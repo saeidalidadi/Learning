@@ -1,15 +1,7 @@
 Hapi = require "hapi"
 jwtoken = require "jsonwebtoken"
 config = require "./config"
-
-users =
-	'alidadisaeid@gmail.com':
-		email: 'alidadisaeid@gmail.com'
-		password: 'pass'
-		fullname: 'Saeid Alidadi'
-		dob: '1989-05-12'
-		weight: 74
-		height: 172
+users = require "./users"
 
 server = new Hapi.Server()
 server.connection({ port: 8011, host: 'localhost' })
