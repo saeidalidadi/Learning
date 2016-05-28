@@ -1,3 +1,9 @@
+# Contents
+* [Lesson 08 - Automate Your Development](#lesson-08-automate-your-development)
+* [Lesson 09 - A complete API set](#lesson-09-a-complete-api-set)
+* [Lesson 10 - Cookie Based Authentication](#lesson-10-cookie-based-authentication)
+* [Lesson 11 - JWT Based Authentication](#lesson-11-jwt-based-authentication)
+
 # Lesson 8 - Automate Your Development
 Automating development workflow with gulp task runner module for Node.js
 
@@ -65,5 +71,44 @@ the API will reply `pong` and in case of logout will say `I will say pong if log
 ### Hello with name
 You will have access to `/hello/arash` just if have been authenticated as `admin`.
 
+# Lesson 11 - JWT Based Authentication
 
+## How it works
+From lesson11 directory use `gulp` to build and start the API or `gulp start` just to start.
+For request to API use [postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en)
+or `curl` with base url of `localhost:8011`.
+
+## Signup
+To signup use `/signup` with `POST` method and body as follow:
+```javascript
+{
+    "fullname" : "your name",
+    "dob": "1989-06-12",
+    "email" : "me@me.com",
+    "password" : "password",
+    "weight" : "74",
+    "height": "172"
+}
+```
+If your signup be successful the API will response `Your registeration was successful login to your account` and after that if you try to login again will respond `This email has been registered before` and if 
+you forget to fill some fields it will respond `To signup you must fill all required fields`
+## Login
+To login your account use `/login` with `POST` method and your login credentials as follow:
+```javascript
+{
+    "email" : "me@me.com",
+    "password" : "password"
+    
+}
+```
+If your login be successful the API will respond `Your authorization was successful`
+
+## Profile
+To see your profile use `/me` with method `GET` 
+
+## Feed
+Useing `/feed` with method `GET` will respond  will respond `[ { card: ‘menu’ }, { card: ‘login’ } ]` if you were logged in and otherwise respond  `[ { card: ‘menu’ }, { card: ‘profile’, name: your_name } ]` 
+
+## Logout
+To logout use `/logout` with `POST` method. If you were logged in the API will respond `Your logout was successful`
 

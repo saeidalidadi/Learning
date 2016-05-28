@@ -1,15 +1,18 @@
-Hapi = require "hapi"
+Hapi 		= require "hapi"
 jwtoken = require "jsonwebtoken"
-config = require "./config"
-users = require "./users"
+config 	= require "./config"
+users 	= require "./users"
 
 server = new Hapi.Server()
 server.connection({ port: 8011, host: 'localhost' })
 
+server.app.logins = {}
+server.app.uid = 0
 server.register(require('hapi-auth-jwt2'), (err) ->
 	
 	validate = (decoded, request, cb) ->
-		if !users[decoded.email]
+		login = request.server.app.logins[decoded.id].email
+		if !users[decoded.email] and  !login
 			return cb(null, false)
 		else
 			cb(null, true)

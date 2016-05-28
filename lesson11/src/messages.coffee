@@ -8,5 +8,9 @@ module.exports =
 		invalid: 'Username or password is invalid'
 		success: 'Your authorization was successful'
 		loggedin: 'You are logged in'
+	logout:
+		success: 'Your logout was successful'
+		isn_loggedin: 'You are not logged in'
+		
 
 

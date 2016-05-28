@@ -3,9 +3,13 @@ users    = require "./users"
 jwtoken  = require "jsonwebtoken"
 messages = require "./messages"
 
+id = 0
+
 module.exports = [{
 	path: '/'
 	method: 'GET'
+	config:
+		auth: false
 	handler: (request, reply) ->
 		reply()
 }
@@ -30,7 +34,6 @@ module.exports = [{
 
 		else
 			users[payload.email] = payload
-			#users[payload.email].state = 'out'
 			return reply(messages.signup.success)
 }
 ,
@@ -53,8 +56,10 @@ module.exports = [{
 			reply(messages.login.unregistered)
 
 		else
-			cr = { email: users[request.payload.email].email }
-			reply(messages.login.success).header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "50s" }))
+			id = String ++request.server.app.uid
+			request.server.app.logins[id] = request.payload.email
+			cr = { email: users[request.payload.email].email, id: id }
+			reply(messages.login.success).header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "3m" }))
 }
 ,
 {
@@ -85,8 +90,11 @@ module.exports = [{
 		auth: { mode: 'try' }
 	handler: (request, reply) ->
 		if request.auth.isAuthenticated
-			console.log request.auth.token
-			reply()
+			id = request.auth.credentials.id
+			delete request.server.app.logins[id]
+			reply messages.logout.success
+		else
+			reply messages.logout.isn_loggedin
 }]
 
 

@@ -4,7 +4,7 @@ coffee = require "gulp-coffee"
 
 gulp.task('start', (cb) ->
 	nodemon({
-		script: 'src/index.coffee'
+		script: 'src/server.coffee'
 	})
 )
 
