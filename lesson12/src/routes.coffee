@@ -26,27 +26,7 @@ module.exports = [{
 	method: ['GET', 'POST']
 	config:
 		auth: { mode: 'try' }
-	handler: (request, reply) ->
-		if request.method is 'get'
-			return reply.view 'login'
-
-		else
-			payload = request.payload
-			
-			if request.auth.isAuthenticated
-				reply(messages.login.loggedin)
-
-			else if !payload.email or !payload.password
-				return reply.view('login', { message: messages.login.invalid })
-
-			else if !users[request.payload.email]
-				reply.view('login', { message: messages.login.unregistered })
-
-			else
-				id = String ++request.server.app.uid
-				request.server.app.logins[id] = request.payload.email
-				cr = { email: users[request.payload.email].email, id: id }
-				reply(messages.login.success).header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "10m" }))
+	handler: require './login'
 }
 ,
 {
