@@ -20,14 +20,15 @@ module.exports =  (request, reply) ->
 				return reply.view 'login', { message: messages.login.invalid }
 
 			else
-				model.search(payload).isRegistered (registered, user) ->
+				model.isRegistered payload.email, (registered, user) ->
 					if !registered
 						reply.view 'login', { message: messages.login.unregistered }
 					else if user.password is payload.password
 						uid = String ++request.server.app.uid
 						request.server.app.logins[uid] = request.payload.email
 						cr = { email: payload.email, id: uid }
-						reply(messages.login.success).header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "10m" }))
+						reply.redirect "/?token=#{jwtoken.sign(cr, config.tokenKey, { expiresIn: "1day" })}"
+						#reply(messages.login.success).header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "1day" }))
 
 					else
 						reply.view 'login', { message: messages.login.invalid }

@@ -1,0 +1,27 @@
+doctype html
+html
+	head
+		title Welcome to our blog API
+body
+	div.header
+		if isLoggedin
+			h3
+				a(href='/logout?token=' + token) logout
+		else
+			h1
+				a(href='/login') login
+	div.content
+		if posts
+			each post in posts
+				.post
+					.author author: #{post.author}
+					.title
+						h2  #{post.title}
+					.body #{post.body}
+		if isLoggedin
+			h3 Publish Your post:
+			form(action='/posts?token=' + token, method='post')
+				input(type='text', name='title')
+				textarea(name='body', cols='60', rows='15')
+				input(type='submit')
+	div.footer

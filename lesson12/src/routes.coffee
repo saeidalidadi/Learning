@@ -8,9 +8,8 @@ module.exports = [{
 	path: '/'
 	method: 'GET'
 	config:
-		auth: false
-	handler: (request, reply) ->
-		reply.redirect '/register'
+		auth: { mode: 'try' }
+	handler: require "./home"
 }
 ,
 {
@@ -33,23 +32,15 @@ module.exports = [{
 	path: '/me'
 	method: 'GET'
 	handler: (request, reply) ->
-		console.log request.headers
 		identity = request.auth.credentials.email
 		reply users[identity]
 
 }
 ,
 {
-	path: '/feed'
-	method: 'GET'
-	config:
-		auth: { mode: 'try'}
-	handler: (request, reply) ->
-		if !request.auth.isAuthenticated
-			reply [ { card: 'menu' }, { card: 'login' } ]
-		else
-			name = users[request.auth.credentials.email].fullname
-			reply [ { card: 'menu' }, { card: 'profile', name: name } ]
+	path: '/posts'
+	method: 'POST'
+	handler: require './add-post'
 }
 ,
 {
@@ -58,7 +49,6 @@ module.exports = [{
 	config:
 		auth: { mode: 'try' }
 	handler: (request, reply) ->
-		console.log request.headers
 		if request.auth.isAuthenticated
 			id = request.auth.credentials.id
 			delete request.server.app.logins[id]

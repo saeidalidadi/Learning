@@ -10,11 +10,12 @@ module.exports = (request, reply) ->
 		if !payload.email or !payload.name or !payload.password
 			reply.view('register', { message: messages.signup.isn_payload})
 		else
-			model.search(payload).isRegistered (registered) ->
+			model.isRegistered payload.email, (registered) ->
 				if registered
 					reply.view('register', { message: messages.signup.before_registered })
 				else
-					user = new model.user payload
-					user.create(true).then () ->
-						reply.view('login', { message: messages.signup.success })
+					user = { name: payload.name, email: payload.email, password: payload.password }
+					model.setUser user, (result) ->
+						if result
+							reply.view('login', { message: messages.signup.success })
 
