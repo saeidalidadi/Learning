@@ -7,8 +7,8 @@ model   = require "./model"
 server = new Hapi.Server()
 server.connection({ port: 8012, host: 'localhost' })
 
-server.app.logins = {}
-server.app.uid = 0
+server.app.logins = { 1: 'saeid@me.com' }
+server.app.uid = 1
 
 server.register([require('hapi-auth-jwt2'), require('inert'), require('vision'), require('lout')], (err) ->
 	

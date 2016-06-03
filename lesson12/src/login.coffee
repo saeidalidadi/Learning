@@ -27,7 +27,7 @@ module.exports =  (request, reply) ->
 						uid = String ++request.server.app.uid
 						request.server.app.logins[uid] = request.payload.email
 						cr = { email: payload.email, id: uid }
-						reply.redirect "/?token=#{jwtoken.sign(cr, config.tokenKey, { expiresIn: "1day" })}"
+						reply.redirect "/?token=#{jwtoken.sign(cr, config.tokenKey)}"
 						#reply(messages.login.success).header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "1day" }))
 
 					else

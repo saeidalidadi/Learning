@@ -21,13 +21,16 @@ class Post extends odme.CB
 	source: db
 	props:
 		title: true
-		author: true
 		body: true
+		author_key: true
+		no: true
 	PREFIX: 'p'
 
 
 module.exports = class model
-	constructor:  () ->
+	
+	@searchEng: searchEng
+
 	@isRegistered: (email, cb) ->
 		searchEng.search({
 			index: 'blog'
@@ -40,7 +43,7 @@ module.exports = class model
 				cb(true, doc.hits.hits[0]._source.doc)
 			else cb(false)
 
-	@getPosts: (from, to, cb) ->
+	@getPosts: (from, to, user_mail, cb) ->
 		searchEng.search({
 			index: 'blog'
 			type: 'posts'
@@ -52,13 +55,11 @@ module.exports = class model
 			if docs.hits.total isnt 0
 				keys = for doc in docs.hits.hits
 					doc._id
-				Post.find(keys,'title,body,author_key').then (posts) ->
-					# Extract all uniq author keys from posts
+				Post.find(keys,'title,body,author_key,doc_key').then (posts) ->
 					auth_keys = _.uniq(_.map posts, (post) ->
 						return post.author_key
 					)
 					
-					# For all keys from pre get users from elastic
 					searchEng.search({
 						index: 'blog'
 						type: 'users'
@@ -67,19 +68,32 @@ module.exports = class model
 								terms:
 									doc_key: auth_keys
 					}).then (users) ->
-						# Merge name field from users to posts
 						for post in posts
 							for user in users.hits.hits
 								if post.author_key is user._id
 									post.author = user._source.doc.name
+									if user._source.doc.email isnt user_mail
+										delete post.doc_key
+
 
 						cb(null, posts)
 
 	@setPost: (post, cb) ->
-		# Search for post.email in users
-		# Add returned user key to post doc
-		# Create this post in couchbase post docs
-		post = new Post { title: post.title, body: post.body, author_key:'' }
+		t = @
+		searchEng.search({
+			index: 'blog'
+			type: 'users'
+			body:
+				query:
+					term:
+						email: post.author_email
+		}).then (doc) ->
+			key = doc.hits.hits[0]._id
+			t.countPosts((all, lastPostNo) ->
+				post = new Post { title: post.title, body: post.body, author_key: key, no: ++lastPostNo }
+				post.create(true).then (d) ->
+					cb(null, true)
+			)
 
 	@setUser: (user, cb) ->
 		user = new User user
@@ -87,4 +101,14 @@ module.exports = class model
 			cb(true)
 
 	@getUser: (cb) ->
-		
+	@countPosts: (cb) ->
+		@searchEng.search({
+			index: 'blog'
+			type: 'posts'
+			body:
+				size: 0
+				aggs:
+					max_no:
+						max: { field: "no" }
+		}).then (d) ->
+			cb d.hits.total, d.aggregations.max_no.value

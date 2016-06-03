@@ -39,8 +39,8 @@ module.exports = [{
 ,
 {
 	path: '/posts'
-	method: 'POST'
-	handler: require './add-post'
+	method: ['GET','POST']
+	handler: require './posts'
 }
 ,
 {

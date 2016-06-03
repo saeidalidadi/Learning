@@ -14,14 +14,30 @@ body
 		if posts
 			each post in posts
 				.post
-					.author author: #{post.author}
 					.title
 						h2  #{post.title}
+					.author
+						h4 author: #{post.author}
 					.body #{post.body}
+					if isLoggedin
+						if post.doc_key
+							form(action='/posts/' + post.doc_key, method='delete')
+								input(type='submit', value='Delete')
+							form(action='/posts/' + post.doc_key, method='put')
+								input(type='submit', value='Edit')
+			ul.paginations
+				- var n = 0
+				while n < paginations
+					li.itme
+						a(href='/posts?size=' + ++n) #{n}
 		if isLoggedin
 			h3 Publish Your post:
 			form(action='/posts?token=' + token, method='post')
-				input(type='text', name='title')
-				textarea(name='body', cols='60', rows='15')
-				input(type='submit')
+				div
+					b Title of post:
+					input(type='text', name='title')
+				div
+					textarea(name='body', cols='60', rows='15')
+				div
+					input(type='submit')
 	div.footer

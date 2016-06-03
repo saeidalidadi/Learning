@@ -11,6 +11,9 @@ module.exports =
 	logout:
 		success: 'Your logout was successful'
 		isn_loggedin: 'You are not logged in'
-		
+	post:
+		success: 'Your post published successfully'
+		isn_payload: 'Your post dont have title or content'
+
 
 
