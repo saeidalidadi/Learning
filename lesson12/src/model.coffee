@@ -43,6 +43,10 @@ module.exports = class model
 				cb(true, doc.hits.hits[0]._source.doc)
 			else cb(false)
 
+	@getPost: (key, cb) ->
+		Post.get(key).then (post) ->
+			cb(null, post)
+
 	@getPosts: (from, to, user_mail, cb) ->
 		searchEng.search({
 			index: 'blog'
@@ -94,6 +98,12 @@ module.exports = class model
 				post.create(true).then (d) ->
 					cb(null, true)
 			)
+	@updatePost: (updated, key, cb) ->
+		Post.get(key).then (post) ->
+			post.doc.title = updated.title
+			post.doc.body = updated.body
+			post.update()
+			cb(null, true)
 
 	@setUser: (user, cb) ->
 		user = new User user

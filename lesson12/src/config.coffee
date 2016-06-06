@@ -7,5 +7,8 @@ module.exports =
 	elastic:
 		host: 'localhost'
 		port: 9200
+	docs:
+		username: 'admin'
+		password: 'admin'
 
 

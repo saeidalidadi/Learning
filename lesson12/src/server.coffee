@@ -1,8 +1,5 @@
 Hapi 		= require "hapi"
-jwtoken = require "jsonwebtoken"
 config 	= require "./config"
-users 	= require "./users"
-model   = require "./model"
 
 server = new Hapi.Server()
 server.connection({ port: 8012, host: 'localhost' })
@@ -10,7 +7,10 @@ server.connection({ port: 8012, host: 'localhost' })
 server.app.logins = { 1: 'saeid@me.com' }
 server.app.uid = 1
 
-server.register([require('hapi-auth-jwt2'), require('inert'), require('vision'), require('lout')], (err) ->
+server.register([require('hapi-auth-jwt2'), require('inert'), require('vision'), {
+	register: require('lout')
+	options:
+		auth: mode: 'required'}], (err) ->
 	
 	server.views({
 		engines:
@@ -31,6 +31,10 @@ server.register([require('hapi-auth-jwt2'), require('inert'), require('vision'),
 		verifyOptions: { ignoreExpiration: false, algorithms: ['HS256'] }
 		validateFunc: validate
 	})
+
+	methods = require "./methods"
+	for method in methods
+		server.method( method.name, method.method, method.options)
 
 	server.route require('./routes')
 

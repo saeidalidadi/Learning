@@ -23,8 +23,7 @@ body
 						if post.doc_key
 							form(action='/posts/' + post.doc_key, method='delete')
 								input(type='submit', value='Delete')
-							form(action='/posts/' + post.doc_key, method='put')
-								input(type='submit', value='Edit')
+							a(href='/update/' + post.doc_key + '?token=' + token) Update
 			ul.paginations
 				- var n = 0
 				while n < paginations
