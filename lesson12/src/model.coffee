@@ -6,7 +6,10 @@ _ 	    = require "lodash"
 
 db = new puffer { port: config.database.port, host: config.database.host, name: 'default' }
 
-searchEng = new elastic.Client { host: "localhost:#{config.elastic.port}" }
+searchEng = new elastic.Client({
+	host: "localhost:#{config.elastic.port}"
+	#log: 'trace'
+})
 
 class User extends odme.CB
 	source: db
@@ -28,8 +31,10 @@ class Post extends odme.CB
 
 
 module.exports = class model
-	
+	_index: 'blog'
 	@searchEng: searchEng
+	
+	_mergeAuthor: (posts, users) ->
 
 	@isRegistered: (email, cb) ->
 		searchEng.search({
@@ -47,14 +52,18 @@ module.exports = class model
 		Post.get(key).then (post) ->
 			cb(null, post)
 
-	@getPosts: (from, to, user_mail, cb) ->
+	@getPosts: (size, from, user_mail, cb) ->
 		searchEng.search({
 			index: 'blog'
 			type: 'posts'
 			body:
+				size: size
+				from: from
+				sort: [{
+					no: order: "asc"
+				}]
 				query:
-					range:
-						no: { gte: from, lte: to }
+					match_all: {}
 		}).then (docs) ->
 			if docs.hits.total isnt 0
 				keys = for doc in docs.hits.hits
@@ -76,11 +85,51 @@ module.exports = class model
 							for user in users.hits.hits
 								if post.author_key is user._id
 									post.author = user._source.doc.name
-									if user._source.doc.email isnt user_mail
-										delete post.doc_key
-
-
+									if user_mail?
+										if user._source.doc.email isnt user_mail
+											delete post.doc_key
 						cb(null, posts)
+	
+	@getPostsOf: (email, size, from, cb) ->
+		@searchEng.search({
+			index: @_index
+			type: 'users'
+			body:
+				query:
+					term:
+						email: email
+		}).then (user) =>
+			author_key = user.hits.hits[0]._source.doc.doc_key
+			@searchEng.search({
+				index: 'blog'
+				type: 'posts'
+				body:
+					size: size
+					from: from
+					sort: [{
+						no: order: "asc"
+					}]
+					query:
+						match:
+							author_key: author_key
+			}).then (posts) ->
+				doc_keys = _.map posts.hits.hits, (post) ->
+					post._source.doc.doc_key
+				Post.get(doc_keys).then (docs) ->
+					ps = _.map docs, (p) ->
+						p.doc
+					cb(null, ps)
+
+	@getRandomPosts: (rands, cb) ->
+		@searchEng.search({
+			index: 'blog'
+			type: 'posts'
+			body:
+				query: terms: no: rands
+		}).then (docs) ->
+			posts = _.map docs.hits.hits, (doc) ->
+				doc._source.doc
+			cb(null, posts)
 
 	@setPost: (post, cb) ->
 		t = @
@@ -105,20 +154,49 @@ module.exports = class model
 			post.update()
 			cb(null, true)
 
+	@deletePost: (key, cb) ->
+		Post.remove(key).then (d) ->
+			console.log d
 	@setUser: (user, cb) ->
 		user = new User user
 		user.create(true).then (d) ->
 			cb(true)
 
-	@getUser: (cb) ->
-	@countPosts: (cb) ->
+	@getUser: (email, cb) ->
 		@searchEng.search({
 			index: 'blog'
-			type: 'posts'
+			type: 'users'
 			body:
-				size: 0
-				aggs:
-					max_no:
-						max: { field: "no" }
-		}).then (d) ->
-			cb d.hits.total, d.aggregations.max_no.value
+				query:
+					term: email: email
+		}).then (user) ->
+			cb null, user.hits.hits[0]._source.doc
+	@countPosts: (email, cb) ->
+		if email?
+			@searchEng.search({
+				index: 'blog'
+				type: 'users'
+				body:
+					query:
+						term: email: email
+			}).then (result) =>
+				author_key = result.hits.hits[0]._source.doc.doc_key
+				@searchEng.search({
+					index: 'blog'
+					type: 'posts'
+					body:
+						size: 0
+						query:
+							match: author_key: author_key
+				}).then (doc) ->
+					cb doc.hits.total
+		else
+			@searchEng.search({
+				index: 'blog'
+				type: 'posts'
+				body:
+					size: 0
+					query:
+						match_all: {}
+			}).then (d) ->
+				cb d.hits.total

@@ -2,7 +2,7 @@ doctype html
 html
 	head
 		title Update This Post
-		script(src="https://code.jquery.com/jquery-2.2.4.min.js", integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=", crossorigin="anonymous")
+		include ./scripts.jade
 	body
 		form(method='put', action='/posts/' + post.doc_key + '?token=' + token)
 			div
@@ -10,7 +10,5 @@ html
 			div
 				textarea(name='body', cols='60', rows='15') #{post.body}
 			input(type='submit', value='Update')
-		- var script1 = "$(document).ready(function(){$('form').submit(function(e){"
-		- var script2 = "e.preventDefault();$.ajax({method: 'PUT', url: $('form').attr('action')"
-		- var script3 = ", data:  $('form').serializeArray()}).done(function(data){alert(data)})})})"
-		script(type='text/javascript') !{script1}!{script2}!{script3}
+		script(type='text/javascript')
+			include ./update.js

@@ -1,5 +1,4 @@
 config   = require "./config"
-users    = require "./users"
 jwtoken  = require "jsonwebtoken"
 messages = require "./messages"
 model		 = require "./model"
@@ -10,6 +9,30 @@ module.exports = [{
 	config:
 		auth: { mode: 'try' }
 	handler: require "./home"
+}
+,
+{
+	path: '/docs/{admin}'
+	method: 'GET'
+	config: auth: false
+	handler: (request, reply) ->
+		console.log request.params
+		if request.params.admin is config.docs.username
+			reply.view 'docs'
+}
+,
+{
+	path: '/docs'
+	method: 'POST'
+	config:
+		auth: mode: 'try'
+	handler: (request, reply) ->
+		console.log config.docs
+		if request.payload.username is config.docs.username and request.payload.password is config.docs.password
+			token = jwtoken.sign { type: 'docs' }, config.tokenKey
+			reply.redirect "/docs?token=#{token}"
+		else
+			reply.view 'docs'
 }
 ,
 {
@@ -32,15 +55,51 @@ module.exports = [{
 	path: '/me'
 	method: 'GET'
 	handler: (request, reply) ->
-		identity = request.auth.credentials.email
-		reply users[identity]
+		email = request.auth.credentials.email
+		model.getUser email, (err, user) ->
+			locals =
+				name: user.name
+				email: user.email
+			reply.view "profile", locals
 
+}
+,
+{
+	path: '/me/posts'
+	method: 'GET'
+	handler: require "./user-posts"
 }
 ,
 {
 	path: '/posts'
 	method: ['GET','POST']
-	handler: require './posts'
+	config:
+		auth: mode: 'try'
+	handler: (request, reply) ->
+		if request.method is 'get'
+			require("./posts-page") request, reply
+		else require("./posts") request, reply
+}
+,
+{
+	path: '/update/{doc_key}'
+	method: 'GET'
+	handler: require "./update-page"
+}
+,
+{
+	path: '/posts/{post_key}'
+	method: ['PUT', 'DELETE', 'GET']
+	config:
+		auth: mode: 'try'
+	handler: (request, reply) ->
+		console.log request.method
+		if request.method is 'put'
+			require("./update-post") request, reply
+		else if request.method is 'delete'
+			require("./delete-post") request, reply
+		else if request.method is 'get'
+			require("./one-post") request, reply
 }
 ,
 {

@@ -1,8 +1,17 @@
+###
+#                                              
+# posts.coffee                                 
+# Method: POST                                 
+# Path: /posts                                 
+# des: will add a post for registered user     
+#                                              
+###
+
 model = require "./model"
 messages = require "./messages"
 
 module.exports = (request, reply) ->
-	if request.method is 'post' and request.payload.title isnt '' or request.payload.body isnt ''
+	if request.payload.title isnt '' or request.payload.body isnt ''
 		post =
 			title: request.payload.title
 			body: request.payload.body

@@ -1,3 +1,11 @@
+###
+#
+#	home.coffee
+#	Method: GET
+#	Path: /
+#
+###
+
 model = require "./model"
 
 module.exports = (request, reply) ->
@@ -8,11 +16,15 @@ module.exports = (request, reply) ->
 	else
 		isLoggedin = false
 		email = ''
-	model.getPosts 1, 5, email, (err, posts) ->
-		model.countPosts (total) ->
-			if total % 5 is 0 and total >= 5
-				paginations = total // 5
-			else if total > 5
-				paginations = (total // 5) + 1
-			reply.view 'home', { isLoggedin: isLoggedin, token: token, posts: posts, paginations: paginations }
+	model.getPosts 5, 0, email, (err, posts) ->
+		request.server.methods.countPagination null, (err, result) ->
+			model.getRandomPosts [6, 8], (err, randoms) ->
+				locals =
+					isLoggedin: isLoggedin
+					token: token
+					posts: posts
+					paginations: result
+					randoms: randoms
+					pageUrl: "/posts"
 
+				reply.view "posts", locals

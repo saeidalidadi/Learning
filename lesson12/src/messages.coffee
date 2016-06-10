@@ -14,6 +14,3 @@ module.exports =
 	post:
 		success: 'Your post published successfully'
 		isn_payload: 'Your post dont have title or content'
-
-
-
