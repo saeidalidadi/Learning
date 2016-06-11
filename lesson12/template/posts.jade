@@ -26,7 +26,10 @@ html
 						.title
 							h2  #{post.title}
 						.author
-							h4 author: #{post.author}
+							if userPosts
+								h4 Author: You
+							else
+								h4 author: #{post.author}
 						.body #{post.body}
 						if isLoggedin
 							if post.doc_key
