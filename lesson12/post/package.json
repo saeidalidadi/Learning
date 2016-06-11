@@ -1,0 +1,21 @@
+{
+  "name": "post",
+  "version": "1.0.0",
+  "description": "Post(s) of blog",
+  "main": "post.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "show",
+    "post(s)",
+    "delete",
+    "post",
+    "add",
+    "post",
+    "update",
+    "post"
+  ],
+  "author": "Saeid Alidadi",
+  "license": "ISC"
+}
