@@ -6,8 +6,8 @@
 #
 ###
 
-model = require "./model"
-module.exports = (request, reply) ->
+module.exports = (request, reply, options) ->
+	model = options.model
 	size = Number request.query.size
 	from = size * 5
 	email = request.auth.credentials.email

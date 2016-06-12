@@ -6,6 +6,7 @@ gulp.task('start', (cb) ->
 	nodemon({
 		script: 'src/server.coffee'
 		ext: 'coffee jade'
+		watch: [__dirname, "#{__dirname}/../user/src", "#{__dirname}/../post/src"]
 	})
 )
 

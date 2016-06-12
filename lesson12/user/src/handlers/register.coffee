@@ -1,8 +1,7 @@
-model = require "./model"
 messages = require "./messages"
 
-module.exports = (request, reply) ->
-
+module.exports = (request, reply, options) ->
+	model = options.model
 	if request.method is 'get'
 		reply.view 'register'
 	else

@@ -8,13 +8,9 @@
   },
   "keywords": [
     "show",
-    "post(s)",
     "delete",
-    "post",
     "add",
-    "post",
-    "update",
-    "post"
+    "update"
   ],
   "author": "Saeid Alidadi",
   "license": "ISC"

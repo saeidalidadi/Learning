@@ -6,9 +6,9 @@
 #
 ###
 
-model = require "./model"
-
-module.exports = (request, reply) ->
+module.exports = (request, reply, options) ->
+	M = options.model
+	#console.log M::props
 	if request.auth.isAuthenticated
 		isLoggedin = true
 		email = request.auth.credentials.email
@@ -16,9 +16,9 @@ module.exports = (request, reply) ->
 	else
 		isLoggedin = false
 		email = ''
-	model.getPosts 5, 0, email, (err, posts) ->
+	M::getPosts 5, 0, email, (err, posts) ->
 		request.server.methods.countPagination null, (err, result) ->
-			model.getRandomPosts [6, 8], (err, randoms) ->
+			M::getRandomPosts [6, 8], (err, randoms) ->
 				locals =
 					isLoggedin: isLoggedin
 					token: token

@@ -7,8 +7,7 @@
 #                                              
 ###
 
-model = require "./model"
-messages = require "./messages"
+messages = require "../messages"
 
 module.exports = (request, reply) ->
 	if request.payload.title isnt '' or request.payload.body isnt ''
