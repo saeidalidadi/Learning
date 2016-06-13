@@ -11,10 +11,8 @@ module.exports = (server, options, next) ->
 	server.handler('posts', require "./handlers/posts")
 	
 	# adding server methods
-	methods = require "./methods"
-	for method in methods
-		server.method( method.name, method.method, method.options)
-
+	require("./methods") server, options
+	
 	# adding routes
 	server.route require("./routes") server, options
 	next()

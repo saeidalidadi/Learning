@@ -1,4 +1,4 @@
-messages = require "./messages"
+messages = require "../messages"
 
 module.exports = (request, reply, options) ->
 	model = options.model

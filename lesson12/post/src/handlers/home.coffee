@@ -8,7 +8,6 @@
 
 module.exports = (request, reply, options) ->
 	M = options.model
-	#console.log M::props
 	if request.auth.isAuthenticated
 		isLoggedin = true
 		email = request.auth.credentials.email

@@ -6,12 +6,11 @@
 # Des: will show a page contains five posts and paginations
 #
 ###
-model = require "./model"
 
-module.exports = (request, reply) ->
+module.exports = (request, reply, options) ->
+	M = options.model
 	page = Number request.query.size
 	from = page * 5
-	console.log 'from',from
 	if request.auth.isAuthenticated
 		email = request.auth.credentials.email
 		isLoggedin = true
@@ -19,7 +18,7 @@ module.exports = (request, reply) ->
 	else
 		email = null
 
-	model.getPosts(5, from, email, (err, posts) ->
+	M::getPosts(5, from, email, (err, posts) ->
 		request.server.methods.countPagination null, (err, pages) ->
 			locals =
 				posts: posts

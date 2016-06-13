@@ -1,3 +1,13 @@
+###
+#
+#	logout.coffee
+#	Method: 
+#	Path:
+#
+###
+
+messages = require "../messages"
+
 module.exports =  (request, reply) ->
 	if request.auth.isAuthenticated
 		id = request.auth.credentials.id

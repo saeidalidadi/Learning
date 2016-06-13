@@ -12,7 +12,8 @@ module.exports = (server, options) ->
 	{
 		path: '/me/posts'
 		method: 'GET'
-		handler: require "./handlers/user-posts"
+		handler: (request, reply) ->
+			require("./handlers/user-posts") request, reply, options
 	}
 	,
 	{
@@ -20,16 +21,17 @@ module.exports = (server, options) ->
 		method: ['GET','POST']
 		config:
 			auth: mode: 'try'
-		handler: (request, reply, options) ->
+		handler: (request, reply) ->
 			if request.method is 'get'
-				require("./posts-page") request, reply
-			else require("./posts") request, reply
+				require("./handlers/posts-page") request, reply, options
+			else require("./handlers/posts") request, reply, options
 	}
 	,
 	{
 		path: '/update/{doc_key}'
 		method: 'GET'
-		handler: require "./handlers/update-page"
+		handler: (request, reply) ->
+			require("./handlers/update-page") request, reply, options
 	}
 	,
 	{
@@ -38,12 +40,11 @@ module.exports = (server, options) ->
 		config:
 			auth: mode: 'try'
 		handler: (request, reply) ->
-			console.log request.method
 			if request.method is 'put'
-				require("./update-post") request, reply
+				require("./handlers/update-post") request, reply, options
 			else if request.method is 'delete'
-				require("./delete-post") request, reply
+				require("./handlers/delete-post") request, reply, options
 			else if request.method is 'get'
-				require("./one-post") request, reply
+				require("./handlers/one-post") request, reply, options
 	}]
 

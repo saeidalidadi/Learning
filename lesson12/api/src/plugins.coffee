@@ -1,4 +1,5 @@
-model = require "./model"
+model  = require "./model"
+config = require "./config"
 
 module.exports = [
 	{
@@ -14,6 +15,7 @@ module.exports = [
 	{
 		register: require('user')
 		options:
+			secretKey: config.tokenKey
 			db: model.db
 			searchEng: model.searchEng
 	}

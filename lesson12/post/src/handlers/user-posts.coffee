@@ -7,12 +7,13 @@
 ###
 
 module.exports = (request, reply, options) ->
-	model = options.model
+	M = options.model
 	size = Number request.query.size
 	from = size * 5
 	email = request.auth.credentials.email
-	model.getPostsOf email, 5, from, (err, posts) ->
+	M::getPostsOf email, 5, from, (err, posts) ->
 		request.server.methods.countPagination email, (err, result) ->
+			console.log result
 			locals =
 				token: request.auth.token
 				isLoggedin: true

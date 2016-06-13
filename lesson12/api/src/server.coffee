@@ -25,7 +25,7 @@ server.register([require('hapi-auth-jwt2'), require('inert'), require('vision')]
 		engines:
 			jade: require 'jade'
 		relativeTo: __dirname
-		path: './../template'
+		path: '../../template'
 	})
 
 	server.auth.strategy('jwt', 'jwt', {
