@@ -133,7 +133,7 @@ module.exports = (options) ->
 				post.doc.title = updated.title
 				post.doc.body = updated.body
 				post.update()
-				cb(null, true)
+				cb null, on
 
 		deletePost: (key, cb) ->
 			Post.remove(key).then (d) ->
