@@ -7,9 +7,7 @@
 #
 ###
 
-model = require "./model"
 
-module.exports = (request, reply) ->
-	model.getPost(request.params.post_key, (err, post) ->
+module.exports = (request, reply, options) ->
+	options.model::getPost request.params.post_key, (err, post) ->
 		reply.view "post", { post: post.doc }
-	)
