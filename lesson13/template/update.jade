@@ -1,0 +1,14 @@
+doctype html
+html
+	head
+		title Update This Post
+		include ./scripts.jade
+	body
+		form(method='put', action='/posts/' + post.doc_key + '?token=' + token)
+			div
+				input(type='text', name='title', value='' + post.title , placeholder='Title of your post')
+			div
+				textarea(name='body', cols='60', rows='15') #{post.body}
+			input(type='submit', value='Update')
+		script(type='text/javascript')
+			include ./update.js

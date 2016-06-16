@@ -1,0 +1,16 @@
+doctype html
+html
+	head
+		title Login to Blog API
+	body
+		h1 Login to Blog API
+		h3 #{message}
+		form(method='POST', action='/login')
+			div
+				span Email:
+				input(type='email', name='email')
+			div
+				span Password:
+				input(type='password', name='password')
+			div
+				input(type='submit', value='Login')

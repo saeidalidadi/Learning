@@ -1,0 +1,14 @@
+doctype html
+html
+	head
+		title Login to see documentations as admin
+	body
+		form(method='post', action='/docs')
+			div
+				span Username:
+				input(type='text', name='username', placeholder='Username')
+			div
+				span Password:
+				input(type='password', name='password', placeholder='Password')
+			div
+				input(type='submit', value='Login')

@@ -1,0 +1,5 @@
+div
+	h3 Random posts:
+	if randoms
+		each random in randoms
+			a(href='/posts/' + random.doc_key, style={margin: '5px'}) #{random.title}

@@ -1,0 +1,21 @@
+{
+  "name": "post",
+  "version": "1.0.0",
+  "description": "Post(s) of blog",
+  "main": "post.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "show",
+    "delete",
+    "add",
+    "update"
+  ],
+  "author": "Saeid Alidadi",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
+}
