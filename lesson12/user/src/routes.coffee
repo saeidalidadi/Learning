@@ -6,7 +6,8 @@ module.exports = (server, options) ->
     method: ['GET', 'POST']
     config:
       auth: { mode: 'try' }
-    handler: require './handlers/register'
+    handler: (request, reply) ->
+      require('./handlers/register') request, reply, options
   }
   ,
   {
