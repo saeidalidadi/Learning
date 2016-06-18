@@ -1,69 +1,69 @@
 doctype html
 html
-	head
-		title Welcome to our blog API
-		include ./scripts.jade
-		style(type="text/css")
-			include ./style.css
-	body
-		div.header
-			if isLoggedin
-				h3
-					a(href='/logout?token=' + token) logout
-				if userPosts
-					h3
-						a(href='/?token=' + token) All posts
-				else
-					h3
-						a(href='/me/posts?size=0&token=' + token) Your Posts
-			else
-				h1
-					a(href='/login') login
-		div.content
-			if posts
-				each post in posts
-					.post
-						.title
-							h2  #{post.title}
-						.author
-							if userPosts
-								h4 Author: You
-							else
-								h4 author: #{post.author}
-						.body #{post.body}
-						if isLoggedin
-							if post.doc_key
-								form.delete(id=post.doc_key,action='/posts/' + post.doc_key + '?token=' + token, method='delete')
-									input(type='submit', value='Delete')
-								script(type='text/javascript')
-									include ./delete.js
-								a(href='/update/' + post.doc_key + '?token=' + token) Update
-				ul.paginations
-					- var n = 0
-					- var current = page
-					while n < paginations
-						li.itme(style={display: 'inline'})
-							if isLoggedin
-								a.page(href= pageUrl + '?size=' + n + '&token=' + token)
-									if n == page 
-										b #{++n}
-									else
-										span #{++n}
-							else
-								a.page(href='/posts?size=' + n)
-									if n == page
-										b #{++n}
-									else
-										span #{++n}
-			include ./random.jade
-			if isLoggedin
-				h3 Publish Your post:
-				form(action='/posts?token=' + token, method='post')
-					div
-						b Title of post:
-						input(type='text', name='title')
-					div
-						textarea(name='body', cols='60', rows='15')
-					div
-						input(type='submit')
-		div.footer
+  head
+    title Welcome to our blog API
+    include ./scripts.jade
+    style(type="text/css")
+      include ./style.css
+  body
+    div.header
+      if isLoggedin
+        h3
+          a(href='/logout?token=' + token) logout
+        if userPosts
+          h3
+            a(href='/?token=' + token) All posts
+        else
+          h3
+            a(href='/me/posts?size=0&token=' + token) Your Posts
+      else
+        h1
+          a(href='/login') login
+    div.content
+      if posts
+        each post in posts
+          .post
+            .title
+              h2  #{post.title}
+            .author
+              if userPosts
+                h4 Author: You
+              else
+                h4 author: #{post.author}
+            .body #{post.body}
+            if isLoggedin
+              if post.doc_key
+                form.delete(id=post.doc_key,action='/posts/' + post.doc_key + '?token=' + token, method='delete')
+                  input(type='submit', value='Delete')
+                script(type='text/javascript')
+                  include ./delete.js
+                a(href='/update/' + post.doc_key + '?token=' + token) Update
+        ul.paginations
+          - var n = 0
+          - var current = page
+          while n < paginations
+            li.itme(style={display: 'inline'})
+              if isLoggedin
+                a.page(href= pageUrl + '?size=' + n + '&token=' + token)
+                  if n == page 
+                    b #{++n}
+                  else
+                    span #{++n}
+              else
+                a.page(href='/posts?size=' + n)
+                  if n == page
+                    b #{++n}
+                  else
+                    span #{++n}
+      include ./random.jade
+      if isLoggedin
+        h3 Publish Your post:
+        form(action='/posts?token=' + token, method='post')
+          div
+            b Title of post:
+            input(type='text', name='title')
+          div
+            textarea(name='body', cols='60', rows='15')
+          div
+            input(type='submit')
+    div.footer
