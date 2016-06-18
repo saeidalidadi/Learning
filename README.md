@@ -1,10 +1,11 @@
 # Contents
-* [Lesson 08 - Automate Your Development](#lesson-08:-automate-your-development)
-* [Lesson 09 - A complete API set](#lesson-09:-a-complete-api-set)
-* [Lesson 10 - Cookie Based Authentication](#lesson-10:-cookie-based-authentication)
-* [Lesson 11 - JWT Based Authentication](#lesson-11:-jwt-based-authentication)
-* [Lesson 12 -  Add Authentication and Authorisation to Blog](#lesson-12:-add-authentication-and-authorization-to-blog)
-# Lesson 8: Automate Your Development
+* [Lesson 08 - Automate Your Development](#lesson-08---automate-your-development)
+* [Lesson 09 - A complete API set](#lesson-09---a-complete-api-set)
+* [Lesson 10 - Cookie Based Authentication](#lesson-10---cookie-based-authentication)
+* [Lesson 11 - JWT Based Authentication](#lesson-11---jwt-based-authentication)
+* [Lesson 12 -  Add Authentication and Authorization to Blog](#lesson-12---add-authentication-and-authorization-to-blog)
+
+# Lesson 08 - Automate Your Development
 Automating development workflow with gulp task runner module for Node.js
 
 ## Hello World API
@@ -16,7 +17,7 @@ In command line from lesson08 directory `gulp start` will run the api server and
 ## Build from source files
 In command line from lesson08 diretory `gulp build` will compile `.coffee` files in `lesson08/src` to `.js` in `lesson08/build`
 
-# Lesson 9 - A complete API set
+# Lesson 09 - A complete API set
 lesson09 directory contains an API set for reply to `CRUD` actions
 
 ## Documentation of this API
@@ -112,7 +113,7 @@ Useing `/feed` with method `GET` will respond  will respond `[ { card: â€˜menuâ€
 ## Logout
 To logout use `/logout` with `POST` method. If you were logged in the API will respond `Your logout was successful`
 
-# Lesson 12:  Add Authentication and Authorisation to Blog
+# Lesson 12 - Add Authentication and Authorization to Blog
 To start the api from `api` use `gulp start`.
 To visit the blog use `localhost:8012` from your browser.
 
