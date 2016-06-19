@@ -1,0 +1,5 @@
+#### Bucket: default ####
+couchbase.typeSelector.documentTypesRegex.users: ^u_.+$
+couchbase.typeSelector.documentTypesRegex.posts: ^p_.+$
+
+
