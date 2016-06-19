@@ -9,7 +9,6 @@ server.app.uid = 1
 server.log ['error']
 
 validate = (decoded, request, cb) ->
-  console.log 'ssss'
   if request.query.server? and request.query.path? and request.path is '/docs'
     return cb null, true
   isDocs = if request.path is '/docs' then on else off

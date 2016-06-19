@@ -9,4 +9,4 @@
 
 module.exports = (request, reply, options) ->
   options.model::deletePost request.params.post_key, (err, result) ->
-    reply 'Your post deleted'
+    reply.redirect "/?token=#{request.auth.token}"

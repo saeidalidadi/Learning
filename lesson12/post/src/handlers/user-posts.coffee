@@ -13,7 +13,6 @@ module.exports = (request, reply, options) ->
   email = request.auth.credentials.email
   M::getPostsOf email, 5, from, (err, posts) ->
     request.server.methods.countPagination email, (err, result) ->
-      console.log result
       locals =
         token: request.auth.token
         isLoggedin: true
