@@ -2,7 +2,7 @@ messages = require "../messages"
 jwtoken  = require "jsonwebtoken"
 
 module.exports =  (request, reply, options) ->
-  
+
   Model = options.model
 
   if request.method is 'get' and request.auth.isAuthenticated
@@ -12,7 +12,6 @@ module.exports =  (request, reply, options) ->
 
   else
     payload = request.payload
-    
     if request.auth.isAuthenticated
       reply messages.login.loggedin
 
@@ -28,7 +27,6 @@ module.exports =  (request, reply, options) ->
           request.server.app.logins[uid] = request.payload.email
           cr = { email: payload.email, id: uid }
           reply.redirect "/?token=#{jwtoken.sign(cr, options.secretKey)}"
-          #reply(messages.login.success).header('Autherization', jwtoken.sign(cr, config.tokenKey, { expiresIn: "1day" }))
 
         else
           reply.view 'login', { message: messages.login.invalid }

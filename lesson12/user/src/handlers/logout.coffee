@@ -1,12 +1,12 @@
 ###
 #
 # logout.coffee
-# Method: 
-# Path:
+# Method: 'POST' 
+# Path: '/logout'
 #
 ###
 
-messages = require "../messages"
+messages = require '../messages'
 
 module.exports =  (request, reply) ->
   if request.auth.isAuthenticated

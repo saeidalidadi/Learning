@@ -7,7 +7,7 @@ module.exports = (request, reply, options) ->
   else
     payload = request.payload
     if !payload.email or !payload.name or !payload.password
-      reply.view('register', { message: messages.signup.isn_payload})
+      reply.view('register', { message: messages.signup.isn_payload })
     else
       model.isRegistered payload.email, (registered) ->
         if registered

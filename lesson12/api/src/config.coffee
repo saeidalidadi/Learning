@@ -10,5 +10,6 @@ module.exports =
   docs:
     username: 'admin'
     password: 'admin'
+  plugins: ['user', 'post']
 
 

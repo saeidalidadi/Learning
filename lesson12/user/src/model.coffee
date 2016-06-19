@@ -5,7 +5,7 @@
 #
 ###
 
-odme = require "odme"
+odme = require 'odme'
 
 module.exports = (options) ->
   class User extends odme.CB
@@ -43,7 +43,7 @@ module.exports = (options) ->
         type: 'users'
         body:
           query:
-            term: email: email
+            term: { email: email }
       }, (searched) ->
         searched.then (user) ->
           cb null, user.hits.hits[0]._source.doc
