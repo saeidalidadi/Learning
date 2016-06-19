@@ -1,8 +1,8 @@
 $(document).ready(function(){
-  $('form.delete').submit(function(e){
+  $('form.delete').one('submit', function(e){
     e.preventDefault();
     $.ajax({
-      method: 'DELETE', 
+      method: 'DELETE',
       url: $(this).attr('action')
     }).done(function(response){
       alert(response);

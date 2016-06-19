@@ -121,7 +121,13 @@ To visit the blog use `localhost:8012` from your browser.
 To setup api do these steps:
 * From `api/` run `npm install` command.
 * From `api/` run `gulp api:setup`.
-* To run API again in `api/` run `gulp api:start`.
+* From `setup/elasticsearch.yml` copy configurations to `elasticsearch.yml` on your machine.
+* In `lesson12` root directory do `curl -XPUT http://localhost:9200/_template/tipi?pretty=true -d @setup/blog.template.json`
+* Create an index `blog` in ***elastic***.
+* Replicate bucket `default` in `couchbase` to elastic by creating new XDCR in couchbase.
+
+## Run API
+* To run API, in `api/` run `gulp api:start`.
 
 ## Registration
 Use `GET /register` 
