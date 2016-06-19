@@ -117,6 +117,12 @@ To logout use `/logout` with `POST` method. If you were logged in the API will r
 To start the api from `api` use `gulp start`.
 To visit the blog use `localhost:8012` from your browser.
 
+## Setup API
+To setup api do these steps:
+* From `api/` run `npm install` command.
+* From `api/` run `gulp api:setup`.
+* To run API again in `api/` run `gulp api:start`.
+
 ## Registration
 Use `GET /register` 
 
