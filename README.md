@@ -122,12 +122,37 @@ To setup api do these steps:
 * From `api/` run `npm install` command.
 * From `api/` run `gulp api:setup`.
 * From `setup/elasticsearch.yml` copy configurations to `elasticsearch.yml` on your machine.
-* In `lesson12` root directory do `curl -XPUT http://localhost:9200/_template/tipi?pretty=true -d @setup/blog.template.json`
+* In `lesson12` root directory do `curl -XPUT http://localhost:9200/_template/blog?pretty=true -d @setup/blog.template.json`
 * Create an index `blog` in ***elastic***.
 * Replicate bucket `default` in `couchbase` to elastic by creating new XDCR in couchbase.
+##
 
+## Prerequisite
+Before of running the api add two documents to `default` bucket in couchbase as follow:
+
+Id: `p_test`
+```
+{
+  "title" : "Test for title",
+  "body" : "Body of post for test, body of post for test...",
+  "doc_type" : "post",
+  "doc_key" : "p_test",
+  "author_key" : "u_test",
+  "no" : 1
+}
+
+Id: `u_test`
+{
+  "name" : "Arash Kay",
+  "email" : "arash@me.com",
+  "password" : "arash",
+  "doc_type" : "user",
+  "doc_key" : "u_test",
+}
+```
 ## Run API
 * To run API, in `api/` run `gulp api:start`.
+
 
 ## Registration
 Use `GET /register` 
