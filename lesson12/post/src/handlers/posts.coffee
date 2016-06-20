@@ -20,6 +20,6 @@ module.exports = (request, reply, options) ->
       if err
         throw err
       else if added
-        reply messages.post.success
+        reply.redirect "/?token=#{request.auth.token}"
   else
     reply messages.post.isn_payload

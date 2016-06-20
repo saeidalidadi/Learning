@@ -6,7 +6,7 @@ plugins = require('./src/config').plugins
 
 gulp.task('api:setup', (cb) ->
   cmds = for plugin in plugins
-    "cd ../#{plugin} && npm link && cd ../api && npm link #{plugin}"
+    "cd ../#{plugin} && npm install && npm link && cd ../api && npm link #{plugin}"
   cmds = cmds.join ' && '
   exec cmds, (err, stdout, stderr) ->
     console.log stdout
