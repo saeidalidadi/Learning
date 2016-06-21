@@ -22,7 +22,8 @@ module.exports = (server, options) ->
   {
     path: '/me'
     method: 'GET'
-    handler: require "./handlers/profile"
+    handler: (request, reply) ->
+      require("./handlers/profile") request, reply, options
   }
   ,
   {

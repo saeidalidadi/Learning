@@ -1,6 +1,6 @@
-module.exports = (request, reply) ->
+module.exports = (request, reply, options) ->
   email = request.auth.credentials.email
-  model.getUser email, (err, user) ->
+  options.model.getUser email, (err, user) ->
     locals =
       name: user.name
       email: user.email
