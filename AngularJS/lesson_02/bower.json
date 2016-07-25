@@ -1,0 +1,25 @@
+{
+  "name": "hello-angular",
+  "homepage": "https://github.com/saeidalidadi/Learning",
+  "authors": [
+    "Saeid Alidadi <alidadisaeid@gmail.com>"
+  ],
+  "description": "Hello to angular",
+  "main": "index.html",
+  "keywords": [
+    "angular",
+    "hello"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.8"
+  }
+}
