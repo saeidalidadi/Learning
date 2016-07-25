@@ -1,10 +1,10 @@
 .page {
-	padding: 8px;
-	margin-right: 4px;
+  padding: 8px;
+  margin-right: 4px;
 }
 
 .paginations {
-	background: '#55aadd'; 
-	list-style: 'none';
-	padding: .8em
+  background: '#55aadd'; 
+  list-style: 'none';
+  padding: .8em
 }

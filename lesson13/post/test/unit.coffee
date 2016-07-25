@@ -11,7 +11,7 @@ sample_post =
 	title: 'This is a test title'
 	body: 'test for post model, test for post model, test for post model'
 	author_email: 'saeid@me.com'
-	key: 'p_testkey'
+	key: 'bp_test'
 
 describe 'Post', () ->
 	context 'setPost', () ->

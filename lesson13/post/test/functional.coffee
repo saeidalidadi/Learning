@@ -8,7 +8,7 @@ api = 'localhost:8012'
 
 describe 'Post', ->
 	context 'GET /', ->
-		it 'Should return a page that contains 5 post', (done) ->
+		it 'Should return a page that contains atmost 5 and atleast 1 post', (done) ->
 			chai.request(api)
 				.get('/')
 				.end (err, res) ->
@@ -18,8 +18,9 @@ describe 'Post', ->
 	context 'GET /post/{post_key}', ->
 		it 'Should return a page that contains just one post', (done) ->
 			chai.request(api)
-				.get('/posts/p_testkey')
+				.get('/posts/bp_test')
 				.end (err, res) ->
+          console.log res.text
 					res.should.be.html
 					done()
 	context 'GET /posts?size={Integer}', ->

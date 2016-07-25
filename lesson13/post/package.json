@@ -4,7 +4,7 @@
   "description": "Post(s) of blog",
   "main": "post.js",
   "scripts": {
-    "test": "mocha"
+    "test": "test"
   },
   "keywords": [
     "show",
@@ -15,7 +15,11 @@
   "author": "Saeid Alidadi",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.13.1",
+    "odme": "^1.1.2"
+  },
+  "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.5.3"
+    "chai-http": "^3.0.0"
   }
 }

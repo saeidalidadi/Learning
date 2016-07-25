@@ -14,5 +14,10 @@
     "profile"
   ],
   "author": "Saeid Alidadi",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "odme": "^1.1.2",
+    "jsonwebtoken" : "^7.0.1"
+  }
 }

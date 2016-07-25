@@ -1,0 +1,83 @@
+{
+  "template" : "bl*",
+  "order" : 10,
+  "mappings" : {
+    "posts" : {
+      "_source": {
+        "includes": [ "doc.title", "doc.doc_key", "doc.doc_type", "doc.author_key", "doc.no" ] 
+      },
+      "properties": {
+        "doc": {
+          "properties": {
+            "author_key": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "body": {
+              "type": "string"
+            },
+            "doc_key": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "doc_type": {
+              "type": "string"
+            },
+            "no": { 
+              "type": "integer" 
+            },
+            "title": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "users" : {
+      "_source" : {
+        "includes": [ "doc.name", "doc.email", "doc.password", "doc.doc_type", "doc.doc_key" ]
+      },
+      "properties" : {
+        "doc" : {
+          "properties" : {
+            "email" : {
+              "type" : "string",
+              "index": "not_analyzed"
+            },
+            "name" : {
+                "type" : "string"
+            },
+            "password" : {
+              "type" : "string",
+              "index": "not_analyzed"
+            },
+            "doc_type" : {
+              "type" : "string"
+            },
+            "doc_key" : {
+              "type" : "string",
+              "index": "not_analyzed"
+            }
+          }
+        }
+      }
+    },
+    "couchbaseCheckpoint" : {
+      "_source" : {
+        "includes" : ["doc.*"]
+      },
+      "dynamic_templates": [
+        {
+          "store_no_index": {
+            "match": "*",
+            "mapping": {
+              "store" : "no",
+              "index" : "no",
+              "include_in_all" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}
