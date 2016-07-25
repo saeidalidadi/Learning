@@ -29,7 +29,7 @@ cache = server.cache({
 server.app.cache = cache;
 
 server.connection({
-  port: 8015,
+  port: 8010,
   host: 'localhost'
 });
 
@@ -56,10 +56,17 @@ server.register(require("hapi-auth-cookie"), function(error) {
       path: '/',
       method: 'GET',
       config: {
-        auth: false,
+        auth: {
+          mode: 'try'
+        },
+        plugins: {
+          'hapi-auth-cookie': {
+            redirectTo: false
+          }
+        },
         handler: function(request, reply) {
           if (request.auth.isAuthenticated) {
-            return view(reply, 'authenticated');
+            return view(reply, 'authenticated', 'You are authenticated');
           } else {
             return view(reply);
           }
