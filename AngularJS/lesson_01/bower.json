@@ -1,0 +1,23 @@
+{
+  "name": "learn-bootstrap",
+  "homepage": "https://github.com/saeidalidadi/Learning",
+  "authors": [
+    "Saeid Alidadi <alidadisaeid@gmail.com>"
+  ],
+  "description": "learning bootstrap by creating a page that contains all bootstrap elements",
+  "main": "index.html",
+  "keywords": [
+    "bootstrap"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
