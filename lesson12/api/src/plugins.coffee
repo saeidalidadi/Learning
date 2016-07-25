@@ -4,7 +4,7 @@ config = require "./config"
 module.exports = [
   {
     register: require('lout')
-    options: auth: mode: 'required'
+    options: auth: mode: 'try'
   }
   {
     register: require('post')

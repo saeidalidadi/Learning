@@ -17,7 +17,7 @@ module.exports = (options) ->
       body: on
       author_key: on
       no: on
-    PREFIX: 'p'
+    PREFIX: 'bp'
 
     getPost: (key, cb) ->
       Post.get(key).then (post) ->

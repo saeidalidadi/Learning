@@ -17,7 +17,7 @@ module.exports = (options) ->
       email: on
       password: on
       posts: on
-    PREFIX: 'u'
+    PREFIX: 'bu'
 
     @isRegistered: (email, cb) ->
       @search {
