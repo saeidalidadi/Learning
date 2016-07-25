@@ -1,13 +1,14 @@
 # Contents
-### NodeJS
-* [Lesson 08 - Automate Your Development](#lesson-08---automate-your-development)
-* [Lesson 09 - A complete API set](#lesson-09---a-complete-api-set)
-* [Lesson 10 - Cookie Based Authentication](#lesson-10---cookie-based-authentication)
-* [Lesson 11 - JWT Based Authentication](#lesson-11---jwt-based-authentication)
-* [Lesson 12 -  Add Authentication and Authorization to Blog](#lesson-12---add-authentication-and-authorization-to-blog)
-* [Lesson 13 - Automated testing for lesson 12](#lesson-13---automated-testing-for-lesson-12)
-### AngularJS
-* [Lesson 02 - Simplest Angular Sample](lesson-02---simplest-angular-sample)
+* NodeJS
+	* [Lesson 08 - Automate Your Development](#lesson-08---automate-your-development)
+	* [Lesson 09 - A complete API set](#lesson-09---a-complete-api-set)
+	* [Lesson 10 - Cookie Based Authentication](#lesson-10---cookie-based-authentication)
+	* [Lesson 11 - JWT Based Authentication](#lesson-11---jwt-based-authentication)
+	* [Lesson 12 -  Add Authentication and Authorization to Blog](#lesson-12---add-authentication-and-authorization-to-blog)
+	* [Lesson 13 - Automated testing for lesson 12](#lesson-13---automated-testing-for-lesson-12)
+* AngularJS
+	* [Lesson 02 - Simplest Angular Sample](#lesson-02---simplest-angular-sample)
+
 # Lesson 08 - Automate Your Development
 Automating development workflow with gulp task runner module for Node.js
 
@@ -164,8 +165,8 @@ Use `GET /register`
 After logging in to blog at the buttom of all posts page you can publish your blog with title and body fields
 
 # Lesson 13 - Automated testing for lesson 12
-# Lesson 02 - Simplest Angular Sample
 
+# Lesson 02 - Simplest Angular Sample
 ## How to Setup
 From lesson02 of AngularJS directory run `bower install` for installing dependencies.
 
